@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Updating nodejs...
+      - curl -sL https://deb.nodesource.com/setup_14.x | bash -
+      - apt update
+      - apt -y install nodejs
+      - aws --version
+      - npm --version
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+  build:
+    commands:
+      - echo Installing node_moduels...
+      - npm install
+      - echo React-Component/DOM/Jest Unit testing for UI...
+      - npm run test -- --ci --watchAll=false
+      - echo Building...
+      - npm run build
+  post_build:
+    commands:
+      - echo post_build... maybe need to ZIP something here
+artifacts:
+  base-directory: build
+  files:
+    - "**/*"
+cache:
+  files:
+    - node_modules

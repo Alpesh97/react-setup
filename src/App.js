@@ -1,0 +1,14 @@
+import React from "react";
+
+import "@assets/css/style.css";
+import Routes from "./Routes";
+
+function App() {
+  return (
+    <div>
+      <Routes />
+    </div>
+  );
+}
+
+export default App;
